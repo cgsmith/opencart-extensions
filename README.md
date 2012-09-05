@@ -11,17 +11,8 @@ Each extension folder has it's own README associated with it.  The README will l
 
 EXTENSION ORGANIZATION
 ------------
-Extension versions will be in the following format:
-
-    X.yy.zzz
-    
-    X   = Major version  (major features adds)
-    yy  = Minor versions (bug fixes)
-    zzz = compatible opencart version
-
 You will see the extensions organized like:
 
       extensions/          base directory
       |-- name1/           name of extension
-        |-- X.yy.zz/       versioning
-          `-- upload/      directory to be uploaded to OpenCart server
+        `-- upload/      directory to be uploaded to OpenCart server

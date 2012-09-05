@@ -1,0 +1,81 @@
+<modification>
+	<id><![CDATA[Invoice to PDF]]></id>
+	<version><![CDATA[1.21.154]]></version>
+	<vqmver><![CDATA[1.00]]></vqmver>
+	<author><![CDATA[CGSmith.net, LLC - http://www.cgsmith.net/]]></author>
+	<file name="admin/language/english/english.php">
+		<operation>
+			<search position="after"><![CDATA[// Button]]></search>
+			<add><![CDATA[$_['button_pdf_invoice']	= 'Download PDF Invoice';]]></add>
+		</operation>
+	</file>
+	<file name="admin/view/template/sale/order_invoice.tpl">
+		<operation>
+			<search position="replace"><![CDATA[<div style="page-break-after: always;">]]></search>
+			<add><![CDATA[]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[foreach ($orders as $order) { ?>]]></search>
+			<add><![CDATA[$iteration=1;
+			foreach ($orders as $order) { 
+			if ($iteration < count($orders)){?>
+<div style="page-break-after: always;">
+<?php }else{?>
+<div>
+<?php }?>
+<?php $iteration++;?>]]></add>
+		</operation>
+	</file>
+	<file name="admin/view/template/sale/order_info.tpl">
+		<operation>
+			<search position="replace"><![CDATA[<div class="buttons">]]></search>
+			<add><![CDATA[<div class="buttons"><a onclick="window.open('<?php echo $invoice; ?>&pdf=true');" class="button"><?php echo $button_pdf_invoice; ?></a>]]></add>
+		</operation>
+	</file>
+	<file name="admin/view/template/sale/order_list.tpl">
+		<operation>
+			<search position="replace"><![CDATA[<div class="buttons">]]></search>
+			<add><![CDATA[<div class="buttons"><a onclick="$('#form').attr('action', '<?php echo $invoice; ?>&pdf=true'); $('#form').attr('target', '_blank'); $('#form').submit();" class="button"><?php echo $button_pdf_invoice; ?></a>]]></add>
+		</operation>
+	</file>
+	<file name="admin/controller/sale/order.php">
+		<operation>
+			<search position="after"><![CDATA[$this->language->get('button_invoice');]]></search>
+			<add><![CDATA[$this->data['button_pdf_invoice'] = $this->language->get('button_pdf_invoice');]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[invoice() {]]></search>
+			<add><![CDATA[$pdf = false;]]></add>
+		</operation>
+		<operation>
+			<search position="replace" offset="7"><![CDATA[$orders = array();]]></search>
+			<add><![CDATA[$orders = array();
+if (isset($this->request->post['selected'])) {
+	$orders = $this->request->post['selected'];
+	$pdf = (isset($this->request->get['pdf'])) ? true : false;
+} elseif (isset($this->request->get['order_id'])) {
+	$orders[] = $this->request->get['order_id'];
+	$pdf = (isset($this->request->get['pdf'])) ? true : false;
+}]]></add>
+		</operation>
+		<operation>
+			<search position="replace" offset="2"><![CDATA[$this->template = 'sale/order_invoice.tpl';]]></search>
+			<add><![CDATA[$this->template = 'sale/order_invoice.tpl';
+			if ($pdf){
+	$this->response->setOutput(pdf($this->render(),$this->data['orders']));
+}else{
+	$this->response->setOutput($this->render());
+}]]></add>
+		</operation>
+	</file>
+	<file name="system/startup.php">
+		<operation>
+			<search position="after"><![CDATA['helper/utf8.php');]]></search>
+			<add><![CDATA[require_once(DIR_SYSTEM . 'helper/pdf.php'); ]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA['library/template.php');]]></search>
+			<add><![CDATA[require_once(DIR_SYSTEM . 'library/dompdf/dompdf_config.inc.php');]]></add>
+		</operation>
+	</file>
+</modification>
