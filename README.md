@@ -32,3 +32,18 @@ LICENSING
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+NOTICE
+------------
+    OpenCart Extensions
+    Copyright 2012 CGSmith.net, LLC
+
+    This product includes software developed at
+    CGSmith.net, LLC (http://www.cgsmith.net/).
+
+    Portions of this software contains code 
+    developed by Marco Arment <me@marco.org>
+    (http://www.marco.org/).
+
+    This software contains code derived from
+    DOMPDF (http://code.google.com/p/dompdf/)
