@@ -1,0 +1,8 @@
+OpenCart Extensions
+Copyright 2012 CGSmith.net, LLC
+
+This product includes software developed at
+CGSmith.net, LLC (http://www.cgsmith.net/).
+
+This software contains code derived from
+DOMPDF (http://code.google.com/p/dompdf/)
