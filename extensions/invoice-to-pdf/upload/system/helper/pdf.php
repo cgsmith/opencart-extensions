@@ -21,7 +21,7 @@ function pdf($data, $name) {
 		$name = 'Order_'.$name[0]['order_id'];
 	}
     $pdf = new DOMPDF;
-    $pdf->load_html($data);
+    $pdf->load_html(utf8_decode($data));
     $pdf->render();
     $pdf->stream($name.".pdf");
 }
